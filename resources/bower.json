@@ -1,0 +1,16 @@
+{
+  "name": "shop",
+  "version": "0.1",
+  "dependencies": {
+    "require-css": "^0.1.10",
+    "text": "requirejs-text#^2.0.15",
+    "requirejs-underscore-tpl": "*",
+    "datatables.net-dt": "^3.2.2",
+    "JavaScript-MD5": "^2.10.0",
+    "requirejs-plugins": "^1.0.3",
+    "requirejs": "^2.3.5",
+    "layer": "^3.1.1",
+    "underscore": "^1.9.0",
+    "jquery": "^3.3.1"
+  }
+}

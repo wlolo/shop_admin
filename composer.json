@@ -1,0 +1,13 @@
+{
+    "name": "shop",
+    "description": "简单的商城",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "wlo_o",
+            "email": "wlo_o@hotmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
