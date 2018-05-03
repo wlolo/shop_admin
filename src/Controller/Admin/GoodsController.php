@@ -25,12 +25,12 @@ class GoodsController extends Controller {
         'off' => ['value' => 1, 'text' => '隐藏', 'color' => 'default'],
     ];
     protected $is_core = [
-        'on'  => ['value' => 1, 'text' => '核心商品', 'color' => 'warning'],
-        'off' => ['value' => 0, 'text' => '非核心商品', 'color' => 'default'],
+        'on'  => ['value' => 1, 'text' => '核心', 'color' => 'warning'],
+        'off' => ['value' => 0, 'text' => '非核心', 'color' => 'default'],
     ];
     protected $is_package = [
-        'off' => ['value' => 0, 'text' => '普通商品', 'color' => 'default'],
-        'on'  => ['value' => 1, 'text' => '组包商品', 'color' => 'warning'],
+        'off' => ['value' => 0, 'text' => '普通', 'color' => 'default'],
+        'on'  => ['value' => 1, 'text' => '组包', 'color' => 'warning'],
     ];
 
     public function index() {
@@ -62,6 +62,7 @@ class GoodsController extends Controller {
     protected function grid() {
         return Admin::grid(\wlo_o\shop\Goods::class, function (Grid $grid) {
             $is_core =  $this->is_core;
+            $is_package = $this->is_package;
             $format_switch = function($val, $switch_kv) {
                 $arg = null;
                 foreach (array_values($switch_kv) as $item) {
@@ -76,12 +77,11 @@ class GoodsController extends Controller {
                 return "<span class=\"label $color\">$str</span>";
             };
             $grid->model()->orderBy('goods_id', 'desc');
-            $this->gridDefaultFilter($grid);
             $grid->goods_id('商品ID')->sortable();
             $grid->goods_sn('编码');
             $grid->goods_name('名称');
-            $grid->is_package('是否组包')->display(function($text) {
-                return array_get(['0'=>'非组包','1'=>'组包'], $text, $text);
+            $grid->is_package('是否组包')->display(function($text) use($is_package, $format_switch){
+                return $format_switch($text, $is_package);
             });
             $grid->goods_thumb('缩略图')->image('http://localhost/uploads/',80,80);
             $grid->is_core('核心商品')->display(function($text) use ($is_core, $format_switch){
@@ -104,7 +104,7 @@ class GoodsController extends Controller {
             $form->text('goods_name', '商品名称');
             $form->text('shop_price', '商城价格');
             $form->text('market_price', '市场价格');
-            $form->display('is_package', '组包商品');
+            $form->switch('is_package', '组包商品')->states($this->is_package);
             $form->switch('is_core', '核心商品')->states($this->is_core);
             $form->switch('is_on_sale', '上架')->states($this->is_on_sale);
             $form->switch('is_no_show','显示')->states($this->is_no_show);
@@ -112,14 +112,57 @@ class GoodsController extends Controller {
             $form->image('goods_thumb', '缩略图')->move(date('Ym'));
             $form->text('rebate_agent', '返利');
             $form->text('rebate_fenxiao', '推广金');
+            $form->datetime('on_sale_time', '上架时间');
+            $form->datetime('off_sale_time', '下架时间');
+            $form->hidden('package_json', '组包明细')->attribute(['id'=>'package_json']);
+            $form->hidden('update_time');
+            $form->html($this->datatables_html());
         });
     }
     
-    protected function gridDefaultFilter($grid){}
     protected function script() {
-        $token=csrf_token();
         return <<<SCRIPT
-        console.log("$token");
+        $.getScript('/vendor/shop/requirejs/require.js').done(function() {
+            $.getScript('/vendor/shop/shop_admin/goods.js');
+        });
 SCRIPT;
+    }
+    
+    protected function datatables_html() {
+        return <<<HTML
+<div id="dt_wrap" style="display:none;">
+    <div class="btn-group pull-left" style="margin-right: 10px">
+        <a href="javascript:" class="btn btn-sm btn-success">
+            <i class="fa fa-table"></i>&nbsp;&nbsp;新增行
+        </a>
+    </div>
+    <table id="dt" style="width:100%">
+            <thead>
+                    <tr>
+                        <th>商品编码</th>
+                        <th>规格</th>
+                        <th>数量</th>
+                        <th>赠品</th>
+                        <th>价格</th>
+                        <th>返利</th>
+                        <th>推广金</th>
+                        <th>库存id</th>
+                    </tr>
+            </thead>
+            <tfoot>
+                    <tr>
+                        <th>商品编码</th>
+                        <th>规格</th>
+                        <th>数量</th>
+                        <th>赠品</th>
+                        <th>价格</th>
+                        <th>返利</th>
+                        <th>推广金</th>
+                        <th>库存id</th>
+                    </tr>
+            </tfoot>
+    </table>
+</div>
+HTML;
     }
 }
