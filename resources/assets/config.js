@@ -18,7 +18,8 @@ requirejs.config({
         'underscore': 'vendor/shop/underscore/underscore-min',
         'layer': 'vendor/shop/layer/dist/layer',
         'layer-mobile': 'vendor/shop/layer/dist/mobile/layer',
-        'md5': 'vendor/shop/JavaScript-MD5/js/md5.min'
+        'md5': ['vendor/shop/JavaScript-MD5/js/md5', 'vendor/shop/JavaScript-MD5/js/md5.min'],
+        'datatables': ['vendor/shop/datatables.net/js/jquery.dataTables', 'vendor/shop/datatables.net/js/jquery.dataTables.min']
     },
     map: {
         '*' : {
@@ -37,7 +38,10 @@ requirejs.config({
             exports: '_'
         },
         'jqueryMd5':{
-             deps: ['jquery']
+            deps: ['jquery']
+        },
+        'datatables':{
+            deps: ['jquery']
         }
     }
 });
