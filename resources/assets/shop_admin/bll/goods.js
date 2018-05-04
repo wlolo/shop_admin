@@ -14,8 +14,9 @@ define('goods', ['jquery', 'datatables'], function($) {
     var dt_options = {
         searching: false,
         paging: false,
+        info: false,
         oLanguage: {
-            sUrl: '/vendor/shop/shop_admin/common/datatable_cn.js'
+            sUrl: '/vendor/shop/shop_admin/common/datatable_cn.json'
         }
     };
     var dt = $('#dt').DataTable(dt_options), counter = 1, columns = $('#dt thead tr th').length;;
