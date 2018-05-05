@@ -8,11 +8,15 @@ define('layer-mobile-custom', ['layer-mobile', 'css!vendor/shop/layer/dist/mobil
 define('layer-custom', ['layer-mobile', 'css!/vendor/shop/layer/dist/theme/default/layer'], function(layer) {
     return layer;
 });
-define('datatables.net-bs-custom', ['datatables.net-bs', 'css!vendor/shop/datatables.net-bs/css/dataTables.bootstrap'])
+define('datatables.net-bs-custom', ['datatables.net-bs', 'css!vendor/shop/datatables.net-bs/css/dataTables.bootstrap']);
+
+define('jquery', [], function() {
+    return jQuery;
+});
 requirejs.config({
     baseUrl: '/',
     paths: {
-        'jquery': 'vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min',
+        // 'jquery': 'vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min',
         'text': 'vendor/shop/text/text',
         'css': 'vendor/shop/require-css/css',
         'tpl': 'vendor/shop/requirejs-underscore-tpl/underscore-tpl',
