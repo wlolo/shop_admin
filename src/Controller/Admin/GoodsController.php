@@ -111,7 +111,7 @@ class GoodsController extends Controller {
             $form->image('original_img', '原图')->move(date('Ym'));
             $form->image('goods_thumb', '缩略图')->move(date('Ym'));
             $form->text('rebate_agent', '返利');
-            $form->text('rebate_fenxiao', '推广金');
+            $form->text('rebate_share', '推广金');
             $form->datetime('on_sale_time', '上架时间');
             $form->datetime('off_sale_time', '下架时间');
 //            $form->hidden('package_json', '组包明细')->attribute(['id'=>'package_json']);
@@ -148,11 +148,12 @@ SCRIPT;
                 <th>商品编码</th>
                 <th>规格</th>
                 <th>数量</th>
+                <th>价格</th>             
                 <th>赠品</th>
-                <th>价格</th>
                 <th>返利</th>
                 <th>推广金</th>
                 <th>库存id</th>
+                <th>操作</th>
             </tr>
         </thead>
     </table>
