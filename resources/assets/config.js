@@ -5,14 +5,14 @@ define('jquery-custom',['jquery'], function($) {
 define('layer-mobile-custom', ['layer-mobile', 'css!vendor/shop/layer/dist/mobile/need/layer'], function(layer) {
     return layer;
 });
-define('layer-custom', ['layer-mobile', 'css!/vendor/shop/layer/dist/theme/default/layer'], function(layer) {
+define('layer-custom', ['layer', 'css!vendor/shop/layer/dist/theme/default/layer'], function(layer) {
     return layer;
 });
 define('datatables.net-bs-custom', ['datatables.net-bs', 'css!vendor/shop/datatables.net-bs/css/dataTables.bootstrap']);
-
 define('jquery', [], function() {
     return jQuery;
 });
+define('select2-custom', ['select2', 'select2-cn']);
 requirejs.config({
     baseUrl: '/',
     paths: {
@@ -25,7 +25,10 @@ requirejs.config({
         'layer-mobile': 'vendor/shop/layer/dist/mobile/layer',
         'md5': ['vendor/shop/JavaScript-MD5/js/md5', 'vendor/shop/JavaScript-MD5/js/md5.min'],
         'datatables.net': ['vendor/shop/datatables.net/js/jquery.dataTables', 'vendor/shop/datatables.net/js/jquery.dataTables.min'],
-        'datatables.net-bs': ['vendor/shop/datatables.net-bs/js/dataTables.bootstrap', 'vendor/shop/datatables.net-bs/js/dataTables.bootstrap.min']
+        'datatables.net-bs': ['vendor/shop/datatables.net-bs/js/dataTables.bootstrap', 'vendor/shop/datatables.net-bs/js/dataTables.bootstrap.min'],
+        'select2':'vendor/laravel-admin/AdminLTE/plugins/select2/select2.full.min',
+        'select2-cn': 'vendor/laravel-admin/AdminLTE/plugins/select2/i18n/zh-CN',
+        'json-editor': ['vendor/shop/json-editor/dist/jsoneditor', 'vendor/shop/json-editor/dist/jsoneditor.min']
     },
     map: {
         '*' : {
@@ -34,12 +37,14 @@ requirejs.config({
             '_': 'underscore',
             '$': 'jquery',
             'jquery': 'jquery-custom',
-            'datatables.net-bs': 'datatables.net-bs-custom'
+            'datatables.net-bs': 'datatables.net-bs-custom',
+            'select2': 'select2-custon'
         },
         'jquery-custom':{'jquery': 'jquery'},
         'layer-mobile-custom': {'layer-mobile': 'layer-mobile'},
         'layer-custom': {'layer': 'layer'},
-        'datatables.net-bs-custom': {'datatables.net-bs': 'datatables.net-bs'}
+        'datatables.net-bs-custom': {'datatables.net-bs': 'datatables.net-bs'},
+        'select2-custom': {'select2':'select2'}
     },
     shim: {
         'underscore': {
@@ -49,6 +54,9 @@ requirejs.config({
             deps: ['jquery']
         },
         'datatables':{
+            deps: ['jquery']
+        },
+        'json-editor':{
             deps: ['jquery']
         }
     }
