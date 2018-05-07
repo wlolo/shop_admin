@@ -137,15 +137,11 @@ SCRIPT;
             <i class="fa fa-table"></i>&nbsp;&nbsp;新增行
         </a>
     </div>
-    <div class="btn-group pull-right" style="margin-right: 10px">
-        <a href="javascript:" class="btn btn-sm btn-success" id="getRow">
-            <i class="fa fa-table"></i>&nbsp;&nbsp;数据
-        </a>
-    </div>
     <table id="dt" style="width:100%">
         <thead>
             <tr>
                 <th>商品编码</th>
+                <th>商品名称</th>
                 <th>规格</th>
                 <th>数量</th>
                 <th>价格</th>             
