@@ -18,8 +18,8 @@ define(['jquery', '_', 'layer', 'uuid', 'json-editor'], function($, _, layer, uu
     var options = $.extend({}, default_options, this.options || {});
     this.editor = $('#' + this.id).jsoneditor(options);
     if (values) {
-      if (_.isObject(values)) {
-        values = JSON.parse(values);
+      if (_.isString(values)) {
+        values = JSON.stringify(values);
       }
       this.editor.setValue(values);
     }
