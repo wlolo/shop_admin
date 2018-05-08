@@ -114,8 +114,8 @@ class GoodsController extends Controller {
             $form->text('rebate_share', '推广金');
             $form->datetime('on_sale_time', '上架时间');
             $form->datetime('off_sale_time', '下架时间');
-//            $form->hidden('package_json', '组包明细')->attribute(['id'=>'package_json']);
-            $form->textarea('package_json', '组包明细')->attribute(['id'=>'package_json']);
+            $form->hidden('package_json', '组包明细')->attribute(['id'=>'package_json']);
+//            $form->textarea('package_json', '组包明细')->attribute(['id'=>'package_json']);
             $form->hidden('update_time');
             $form->html($this->datatables_html());
         });

@@ -1,8 +1,11 @@
 define('goods', ['jquery', '_', 'layer', '/vendor/shop/shop_admin/bll/goods_package_editor.js', 'json-editor', 'datatables.net-bs'], 
 function($, _, layer, dlg) {
+    $(document).on('pjax:start', function() { 
+        NProgress.start();
+    });
     $(document).on('pjax:end', function() {
-        NProgress.done();
         bootUp();
+        NProgress.done();
     });
     function bootUp() {
         var editor = new dlg({schema: getSchema()});
@@ -66,6 +69,7 @@ function($, _, layer, dlg) {
             editor.show(rowData);
             editor.close = function(data) {
                 row.data(data);
+                refreshPakcageJson();
             };
         });
         //异步绑定事件可规避初始化时清空数据
