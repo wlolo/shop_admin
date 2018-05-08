@@ -57,8 +57,11 @@ function($, _, layer, dlg) {
             refreshPakcageJson();
           });
     }).on('click', '.row_edit', function() {
-        var data = dt.row($(this).parents('tr')).data();
-        editor.show(data);
+        var row = dt.row($(this).parents('tr')), rowData = row.data();
+        editor.show(rowData);
+        editor.close = function(data) {
+            row.data(data);
+        };
     });
     //异步绑定事件可规避初始化时清空数据
     setTimeout(function() {
