@@ -7,6 +7,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use wlo_o\shop\Goods;
+use Illuminate\Support\Facades\Input;
 /**
  * 商品管理
  *
@@ -58,9 +60,20 @@ class GoodsController extends Controller {
             $content->body($this->form());
         });
     }
-
+    /**
+     * 商品查询
+     * @return type
+     */
+    public function find() {
+        $goods = Goods::select(Goods::$base_columns)->where('goods_sn', '=', Input::get('goods_sn'))->first();
+        return response()->json([
+            'status'  => true,
+            'message' => '',
+            'data' => $goods?$goods->toArray():[]
+        ]);
+    }
     protected function grid() {
-        return Admin::grid(\wlo_o\shop\Goods::class, function (Grid $grid) {
+        return Admin::grid(Goods::class, function (Grid $grid) {
             $is_core =  $this->is_core;
             $is_package = $this->is_package;
             $format_switch = function($val, $switch_kv) {
@@ -99,7 +112,7 @@ class GoodsController extends Controller {
     }
     
     protected function form() {
-        return Admin::form(\wlo_o\shop\Goods::class, function (Form $form) {
+        return Admin::form(Goods::class, function (Form $form) {
             $form->text('goods_sn', '商品编码');
             $form->text('goods_name', '商品名称');
             $form->text('shop_price', '商城价格');

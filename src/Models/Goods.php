@@ -14,4 +14,6 @@ class Goods extends Model{
     protected $primaryKey = 'goods_id';
     public $guarded = ['goods_id'];
     public $timestamps = false;
+    
+    static public $base_columns = ['goods_id', 'goods_sn', 'goods_name'];
 }

@@ -15,6 +15,6 @@ Route::group([
     'namespace'     => 'wlo_o\\shop\\admin',
     'middleware'    => config('admin.route.middleware', ['web', 'admin']),
 ], function (Router $router) {
+    $router->get('goods/find', 'GoodsController@find');
     $router->resource('goods', 'GoodsController');
-    $router->resource('goods_package', 'GoodsPackageController');
 });
