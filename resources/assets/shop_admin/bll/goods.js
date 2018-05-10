@@ -68,6 +68,7 @@ function($, _, layer, dlg) {
             var row = dt.row($(this).parents('tr')), rowData = row.data();
             editor.show(rowData);
             editor.close = function(data) {
+                debugger;
                 row.data(data);
                 refreshPakcageJson();
             };
@@ -95,7 +96,45 @@ function($, _, layer, dlg) {
             "properties": {
                 "goods_sn": {
                     "type": "string",
-                    "title": "商品编码"
+                    "title": "商品编码",
+                    "enum":["",""],
+                    "default": "",
+                    "options":{
+                        "select2_options" :{
+                            ajax: {
+                                url: '/admin/goods/find',
+                                dataType: 'json',
+                                delay: 300,
+                                data: function (params) {
+                                    var query = {
+                                      goods_sn: params.term,
+                                      page: params.page || 1,
+                                      limit: 10
+                                    };
+                                    return query;
+                                },
+                                processResults: function(json, params) {
+                                    params.page = params.page || 1;
+                                    params.limit = params.limit || 10;
+                                    var rs = _.map(json.data.data, function(o) {
+                                        return $.extend({id: o.goods_sn, text: o.goods_name}, o);
+                                    });
+                                    var more = (params.page * params.limit) < json.data.total;
+                                    return {results: rs, pagination: {more: more}};
+                                },
+                                cache: true
+                            },
+                            templateResult: function(repo) {
+                                if (repo.loading) {
+                                    return repo.text;
+                                }
+                                return repo.goods_sn + '  |  ' + repo.goods_name;
+                            },
+                            templateSelection: function(repo) {
+                                return repo.id || repo.goods_sn;
+                            }
+                        }
+                    }
                 },
                 "goods_name": {
                     "type": "string",

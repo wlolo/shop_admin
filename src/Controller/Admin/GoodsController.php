@@ -65,11 +65,18 @@ class GoodsController extends Controller {
      * @return type
      */
     public function find() {
-        $goods = Goods::select(Goods::$base_columns)->where('goods_sn', '=', Input::get('goods_sn'))->first();
+        $goods_sn = Input::get('goods_sn');
+        $limit = intval(Input::get('limit', 10));
+        $query = Goods::where('is_on_sale', 1)
+                ->orderby('goods_id','desc');
+        if ($goods_sn) {
+            $query->where('goods_sn', 'like', "{$goods_sn}%");
+        }
+        $rs = $query->paginate($limit, Goods::$base_columns);
         return response()->json([
             'status'  => true,
             'message' => '',
-            'data' => $goods?$goods->toArray():[]
+            'data' => $rs? $rs->toArray(): []
         ]);
     }
     protected function grid() {
