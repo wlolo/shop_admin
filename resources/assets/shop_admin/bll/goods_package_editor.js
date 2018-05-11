@@ -1,4 +1,4 @@
-define(['jquery', '_', 'layer', 'uuid', 'json-editor'], function($, _, layer, uuid) {
+define(['jquery', '_', 'layer', 'shop_util', 'json-editor_custom'], function($, _, layer, util) {
   var default_options = {
     theme: 'bootstrap3', disable_collapse: true, disable_properties: true,
     disable_array_delete_last_row: true, disable_edit_json: true, ajax: false
@@ -10,7 +10,7 @@ define(['jquery', '_', 'layer', 'uuid', 'json-editor'], function($, _, layer, uu
   };
   dlg.prototype.show = function(values) {
     var w = $('body').width(), w = w >600? 600: w, me = this;
-    this.id = 'editor_' + uuid();
+    this.id = 'editor_' + util.uuid();
     layer.open({
         type: 1, title: '', zIndex: 99, skin: 'layui-layer-rim',
         area: [ w +'px', '500px'], content: '<div id="' + this.id + '"></div>',

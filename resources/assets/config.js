@@ -13,14 +13,6 @@ define('jquery', [], function() {
     return jQuery;
 });
 define('select2-custom', ['select2', 'select2-cn']);
-define('uuid', function(){
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    }
-    return function(){ 
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +s4() + '-' + s4() + s4() + s4();
-    }
-});
 requirejs.config({
     baseUrl: '/',
     paths: {
@@ -36,7 +28,9 @@ requirejs.config({
         'datatables.net-bs': ['vendor/shop/datatables.net-bs/js/dataTables.bootstrap', 'vendor/shop/datatables.net-bs/js/dataTables.bootstrap.min'],
         'select2':'vendor/laravel-admin/AdminLTE/plugins/select2/select2.full.min',
         'select2-cn': 'vendor/laravel-admin/AdminLTE/plugins/select2/i18n/zh-CN',
-        'json-editor': ['vendor/shop/json-editor/dist/jsoneditor', 'vendor/shop/json-editor/dist/jsoneditor.min']
+        'json-editor': ['vendor/shop/json-editor/dist/jsoneditor', 'vendor/shop/json-editor/dist/jsoneditor.min'],
+        'shop_util': 'vendor/shop/shop_admin/common/util',
+        'json-editor_custom': 'vendor/shop/shop_admin/common/jsoneditor_custom',
     },
     map: {
         '*' : {

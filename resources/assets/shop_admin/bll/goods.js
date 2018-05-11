@@ -68,7 +68,6 @@ function($, _, layer, dlg) {
             var row = dt.row($(this).parents('tr')), rowData = row.data();
             editor.show(rowData);
             editor.close = function(data) {
-                debugger;
                 row.data(data);
                 refreshPakcageJson();
             };
@@ -150,6 +149,12 @@ function($, _, layer, dlg) {
                     "default":	1,
                     "minimum":	1
                 },
+                "goods_price":	{
+                    "type": "integer",
+                    "title": "商品价格",
+                    "default":	0,
+                    "minimum":	0
+                },
                 "is_gift": {
                     "type": "integer",
                     "title": "是否赠品",
@@ -158,6 +163,11 @@ function($, _, layer, dlg) {
                     "options": {
                         "enum_titles": ["普通商品", "赠品"]
                     }
+                },
+                "rebate_share": {
+                    "type": "number",
+                    "title": "推广奖励",
+                    "default": 0
                 },
                 "rebate_agent":	{
                     "type": "number",

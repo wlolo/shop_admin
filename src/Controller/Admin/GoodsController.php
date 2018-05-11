@@ -167,7 +167,7 @@ SCRIPT;
                 <th>价格</th>             
                 <th>赠品</th>
                 <th>返利</th>
-                <th>推广金</th>
+                <th>推广奖励</th>
                 <th>库存id</th>
                 <th>操作</th>
             </tr>
