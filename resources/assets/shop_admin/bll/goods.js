@@ -71,6 +71,10 @@ function($, _, layer, dlg) {
                 row.data(data);
                 refreshPakcageJson();
             };
+            var node = editor.editor.getEditor('root.goods_sn');
+            editor.editor.watch(node.path, function(){
+                console.log(node.getValue());
+            });
         });
         //异步绑定事件可规避初始化时清空数据
         setTimeout(function() {
@@ -150,7 +154,7 @@ function($, _, layer, dlg) {
                     "minimum":	1
                 },
                 "goods_price":	{
-                    "type": "integer",
+                    "type": "integer", 
                     "title": "商品价格",
                     "default":	0,
                     "minimum":	0
@@ -176,7 +180,8 @@ function($, _, layer, dlg) {
                 },
                 "stock_id": {
                     "type": "integer",
-                    "title": "库存 id"
+                    "title": "库存 id",
+                    'readonly': true
                 }
             }
         };
