@@ -1,7 +1,6 @@
 <?php
 use Illuminate\Routing\Router;
 /**
- * Description of routes
  *
  * @author wlo_o
  */
@@ -17,4 +16,5 @@ Route::group([
 ], function (Router $router) {
     $router->get('goods/find', 'GoodsController@find');
     $router->resource('goods', 'GoodsController');
+    $router->resource('activity', 'ActivityController');
 });
