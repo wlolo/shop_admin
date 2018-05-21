@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Input;
  */
 class ActivityController extends Controller{
     use ModelForm;
+    protected $title = '活动';
+    
     public function index() {
         return Admin::content(function (Content $content) {
             $content->header($this->title);
@@ -61,9 +63,8 @@ class ActivityController extends Controller{
     
     protected function form() {
         return Admin::form(Activity::class, function (Form $form) {
-            $form->text('activity_sn', '活动编码');
+            $form->text('activity_sn', '活动编码')->attribute(['id' => 'activity_sn']);
             $form->text('activity_title', '活动名称');
-            $form->text('activity_type', '活动类型');
             $form->text('activity_desc', '活动描述');
             $form->image('activity_logo', '活动图片')->move(date('Ym'));
             $form->datetime('activity_begin_time', '开始时间');
@@ -72,12 +73,17 @@ class ActivityController extends Controller{
             $form->text('view_path', '模板地址')->placeholder('留空使用默认模板');
             $form->hidden('extension_json', '扩展信息')->attribute(['id'=>'extension_json']);
             $form->html($this->extendsion_json_html());
+            $form->saving(function (Form $form) {
+                if(blank($form->activity_sn)){
+                    $form->activity_sn = str_random(10);
+                }
+            });
         });
     }
     protected function script() {
         return <<<SCRIPT
         $.getScript('/vendor/shop/requirejs/require.js').done(function() {
-            $.getScript('/vendor/shop/shop_admin/bll/goods.js');
+            $.getScript('/vendor/shop/shop_admin/bll/activity.js');
         });
 SCRIPT;
     }
