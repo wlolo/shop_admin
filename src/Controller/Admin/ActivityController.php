@@ -63,16 +63,19 @@ class ActivityController extends Controller{
     
     protected function form() {
         return Admin::form(Activity::class, function (Form $form) {
-            $form->text('activity_sn', '活动编码')->attribute(['id' => 'activity_sn']);
-            $form->text('activity_title', '活动名称');
-            $form->text('activity_desc', '活动描述');
-            $form->image('activity_logo', '活动图片')->move(date('Ym'));
-            $form->datetime('activity_begin_time', '开始时间');
-            $form->datetime('activity_end_time', '结束时间');
-            $form->text('activity_remark', '备注');
-            $form->text('view_path', '模板地址')->placeholder('留空使用默认模板');
-            $form->hidden('extension_json', '扩展信息')->attribute(['id'=>'extension_json']);
-            $form->html($this->extendsion_json_html());
+            $form->tab('活动信息', function($form) {
+                $form->text('activity_sn', '活动编码')->attribute(['id' => 'activity_sn']);
+                $form->text('activity_title', '活动名称');
+                $form->text('activity_desc', '活动描述');
+                $form->image('activity_logo', '活动图片')->move(date('Ym'));
+                $form->datetime('activity_begin_time', '开始时间');
+                $form->datetime('activity_end_time', '结束时间');
+                $form->textarea('activity_remark', '备注')->rows(5);
+                $form->text('view_path', '模板地址')->placeholder('留空使用默认模板');    
+            })->tab('活动配置', function($form) {
+                $form->text('extension_json', '扩展信息')->attribute(['id'=>'extension_json']);
+                $form->html($this->extendsion_json_html());
+            });
             $form->saving(function (Form $form) {
                 if(blank($form->activity_sn)){
                     $form->activity_sn = str_random(10);
@@ -89,8 +92,7 @@ SCRIPT;
     }
     protected function extendsion_json_html() {
         return <<<HTML
-<div id="extendsion_json_editor" style="display:none;">
-</div>
+<div id="extendsion_json_editor"></div>
 HTML;
     }
 }
