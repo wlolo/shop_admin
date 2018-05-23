@@ -14,7 +14,10 @@ define('jquery', [], function() {
 });
 define('select2-custom', ['select2', 'select2-cn']);
 define('formBuilder-custom',['jquery-custom', 'jquery-ui-sortable', 'formBuilder', 'formRender']);
-
+define('sortable-custom', ['jquery-custom', 'sortable'], function($, sortable){
+    window['Sortable'] = sortable;
+    return sortable;
+});
 requirejs.config({
     baseUrl: '/',
     paths: {
@@ -35,7 +38,9 @@ requirejs.config({
         'shop_util': 'vendor/shop/shop_admin/common/util',
         formBuilder: 'vendor/shop/formBuilder/dist/form-builder.min',
         formRender:'vendor/shop/formBuilder/dist/form-render.min',
-        'jquery-ui-sortable':'vendor/shop/jquery-ui-sortable/jquery-ui-sortable.min'
+        'jquery-ui-sortable':'vendor/shop/shop_admin/jquery-ui-sortable/jquery-ui-sortable.min',
+        sortable: 'vendor/shop/Sortable/Sortable',
+        'jquery-sortable': 'vendor/shop/Sortable/jquery.binding'
     },
     map: {
         '*' : {
@@ -46,7 +51,8 @@ requirejs.config({
             'layer-mobile': 'layer-mobile-custom',
             'datatables.net-bs': 'datatables.net-bs-custom',
             select2: 'select2-custon',
-            formBuilder: 'formBuilder-custom'
+            formBuilder: 'formBuilder-custom',
+            sortable: 'sortable-custom'
         },
         'jquery-custom':{ jquery: 'jquery'},
         'layer-mobile-custom': { 'layer-mobile': 'layer-mobile'},
@@ -54,12 +60,15 @@ requirejs.config({
         'datatables.net-bs-custom': {'datatables.net-bs': 'datatables.net-bs'},
         'select2-custom': { select2: 'select2'},
         'formBuilder-custom': { formBuilder: 'formBuilder'},
+        'sortable-custom': {'sortable': 'sortable'}
     },
     shim: {
         'underscore': { exports: '_' },
         'jqueryMd5': { deps: ['jquery'] },
         'datatables': { deps: ['jquery'] },
         'json-editor': { deps: ['jquery'] },
-        'jquery-ui-sortable': { deps: ['jquery'] }
+        'jquery-ui-sortable': { deps: ['jquery'] },
+        Sortable: { deps: ['jquery'] },
+        'jquery-sortable': {deps: ['sortable-custom']}
     }
 });

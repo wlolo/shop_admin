@@ -1,0 +1,51 @@
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#widget-config {
+    background-color: #f9fafc;    
+}
+
+#widget-wrap {
+    width: 385px;
+    height: 600px;
+    background-color: #fff;
+    margin:10px 0;
+    display: inline-block;
+    overflow-y: scroll;
+    padding: 0
+}
+.widget li {
+    position: relative;
+    min-height: 60px;
+}
+.widget li:hover {
+    border: 1px solid #2589FF
+}
+#widget-list .widget-icon{
+    font-size:80px;
+}
+#widget-list .widget-remove{
+    display:none;
+}
+#widget-wrap li {
+    position: relative;
+    min-height: 60px;
+    width: 377px;
+}
+#widget-wrap .fa-remove {
+    -webkit-transition: opacity .2s;
+    transition: opacity .2s;
+    opacity: 0;
+    display: block;
+    cursor: pointer;
+    color: #c00;
+    top: 0px;
+    right: 5px;
+    position: absolute;
+    font-style: normal;
+}
+#widget-wrap li:hover i {
+    opacity: 1;
+}

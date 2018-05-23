@@ -1,6 +1,6 @@
-define('activity', ['jquery', '_', 'layer', 'formBuilder'], 
+define('activity', ['jquery', '_', 'layer', 'jquery-sortable', 'css!vendor/shop/shop_admin/bll/activity.css'], 
 function($, _, layer) {
-    $(document).on('pjax:start', function() { 
+     $(document).on('pjax:start', function() { 
         NProgress.start();
     });
     $(document).on('pjax:end', function() {
@@ -8,65 +8,68 @@ function($, _, layer) {
         NProgress.done();
     });
     function bootUp() {
-        var fields = [{
-                label: '<span title="占位图"><i class="fa fa-fw fa-file-image-o"></i>占&ensp;位&ensp;图</span>',
-                attrs: {type: 'banner'}
+        $('#extendsion_json_editor').closest('.form-group').after(getElHtml());
+        var widget_list = $('#widget-list').sortable({
+            sort: false,
+            group: {name: 'widget',pull: 'clone', put: false},
+            animation: 150,
+            onClone: function(evt){
+                var origEl = evt.item;
+		var cloneEl = evt.clone;
+                $(evt.item).click(function() {
+                    $('#widget-options').html('<li><input type="textfield"></li>');
+                });
             }
-        ];
-        var templates = {
-            banner: base_goods_item_template,
-        };
-        var typeUserAttrs = {
-            banner: {
-                img_url: {label:'图片地址', options: {'': ''}}, href: {label:'链接地址'}
-            }
-        };
-        var typeUserEvents = {
-            banner: { onadd: bannerFn }
-        }
-        var fbOptions = {
-            onSave: function(e, formData) { $('.save_btn').trigger('click'); },
-            stickyControls: { enable: true },
-    //            typeUserEvents: typeUserEvents,
-            sortableControls: true,
-            fields: fields,
-            templates: templates,
-            typeUserAttrs: typeUserAttrs,
-            disableInjectedStyle: false,
-//            actionButtons: actionButtons,
-            disableFields: ['autocomplete','checkboxGroup','button','hidden','date', 'paragraph','number','radio-group','checkbox-group','select','text','file','header','textarea'],
-            disabledFieldButtons: { text: ['copy'] },
-            disabledAttrs: ['value','placeholder','access','className','description','name','required','label']
-        };
-        window.formBuilder = $('#extendsion_json_editor').formBuilder(fbOptions);
-        formBuilder.promise.then(function(fb) {
-//            _.each(_util.deepFind(activity_data, 'extension_json'), function(o, index){
-//                (function(idx){
-//                    var obj = activity_data.extension_json[idx];
-//                    cache_data = obj;
-//                    fb.actions.addField({type: obj.type, label: getFieldLable(obj.type), values:[{}]});
-//                })(index);
-//            });
-//            setTimeout(function(){ $('.icon-goods_1000,.icon-goods_1001').hide(); }, 0);//TODO 隐藏功能
         });
+        var editor = $('#widget-wrap').sortable({
+            filter: '.widget-remove',
+            sort: true,
+            animation: 150,
+            group: { name: 'widget', pull: false, put: true},
+            onFilter: function (evt) {
+              var el = editor.data('sortable').closest(evt.item);
+              el && el.parentNode.removeChild(el);
+            },
+            onAdd: function() {
+                
+            }
+        });
+//        $('#add_widget').click(function(){
+//            var el = document.createElement('li');
+//            el.innerHTML = (new Date()).getTime() + '<i class="widget-remove">✖</i>';
+//            editor.data('sortable').el.appendChild(el);
+//        });
+        function createEl(){
+            var el = document.createElement('li');
+            el.innerHTML = (new Date()).getTime() + '<i class="widget-remove">✖</i>';
+            editor.data('sortable').el.appendChild(el);
+        }
     }
     bootUp();
-    
-    function base_goods_item_template(fieldData) {
-        return {
-            field: '<span id="'+fieldData.name+'"><img class="img_preview form-field" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></span>',
-            onRender: function(){
-//                var img = $('#' + fieldData.name+' .img_preview');
-//                img_preview_fn(img, fieldData.img_url);
-            }
-        };
-    };
-    var bannerFn = function(fld) {
-        var me = $(fld);
-//        img_select_append_option(me.find('.fld-img_url'));
-//        init_data(me);
-        me.find('.copy-button').hide();// 拷贝按钮临时屏蔽，在复制数据时 select2 初始化异常
-    };
-});
+    function getElHtml(){
+        return `
+<div class="form-group" id="widget-config">
+    <div class="col-sm-2">
+        <ul id="widget-list" class="widget">
+            <li>
+                <i class="widget-icon fa fa-image"></i>
+                <i class="widget-remove fa fa-remove"></i>
+            </li>
+            <li>
+                <i class="widget-icon fa fa-leaf"></i>
+                <i class="widget-remove fa fa-remove"></i>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-8">
+        <ul id="widget-wrap" class="widget"></ul>
+    </div>
+    <div class="col-sm-2" id="widget-options">
+        
+    </div>
+</div>
 
+`;
+    }
+});
 requirejs(['/vendor/shop/config.js'], function() { requirejs(['activity']);});
