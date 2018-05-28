@@ -1,0 +1,17 @@
+.store-design ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.store_design-preview {
+    width: 385px;
+    height: 600px;
+    background-color: #fff;
+    margin:10px 0;
+    display: inline-block;
+    overflow-y: scroll;
+    padding: 0
+}
+.store_design-preview li:hover,.store_design-preview .selected {
+    border: 1px solid #2589FF
+}

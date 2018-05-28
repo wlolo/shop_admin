@@ -39,8 +39,10 @@ requirejs.config({
         formBuilder: 'vendor/shop/formBuilder/dist/form-builder.min',
         formRender:'vendor/shop/formBuilder/dist/form-render.min',
         'jquery-ui-sortable':'vendor/shop/shop_admin/jquery-ui-sortable/jquery-ui-sortable.min',
-        sortable: 'vendor/shop/Sortable/Sortable',
-        'jquery-sortable': 'vendor/shop/Sortable/jquery.binding'
+        Sortable: 'vendor/shop/Sortable/Sortable',
+        'jquery-sortable': 'vendor/shop/Sortable/jquery.binding',
+        
+        'storeDesign': 'vendor/shop/shop_admin/plugin/storeDesign'
     },
     map: {
         '*' : {
@@ -69,6 +71,7 @@ requirejs.config({
         'json-editor': { deps: ['jquery'] },
         'jquery-ui-sortable': { deps: ['jquery'] },
         Sortable: { deps: ['jquery'] },
-        'jquery-sortable': {deps: ['sortable-custom']}
+        'jquery-sortable': {deps: ['sortable-custom']},
+        page_widget: { deps: ['jquery'] }
     }
 });
