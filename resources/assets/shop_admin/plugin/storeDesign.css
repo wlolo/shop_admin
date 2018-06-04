@@ -1,7 +1,33 @@
+#widget-config {
+    padding-top: 5px;
+    background-color: #ecf0f5;
+}
 .store-design ul {
     margin: 0;
     padding: 0;
     list-style: none;
+}
+.store_design-menu .fa-remove{
+    display:none;
+}
+.store_design-preview .fa-remove {
+    -webkit-transition: opacity .2s;
+    transition: opacity .2s;
+    opacity: 0;
+    display: block;
+    cursor: pointer;
+    color: #c00;
+    top: 0px;
+    right: 5px;
+    position: absolute;
+    font-style: normal;
+}
+.store_design-preview li {
+    position: relative;
+    min-height: 60px;
+}
+.store_design-preview li:hover i {
+    opacity: 1;
 }
 .store_design-preview {
     width: 385px;
@@ -12,6 +38,6 @@
     overflow-y: scroll;
     padding: 0
 }
-.store_design-preview li:hover,.store_design-preview .selected {
+.store_design-menu li:hover,.store_design-preview li:hover,.store_design-preview .selected {
     border: 1px solid #2589FF
 }
