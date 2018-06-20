@@ -41,7 +41,7 @@
             '<div class="form-group store-design-wrap">',
                 template(tpl, { width: 2, title: '模板', html: menusHtml, className: this.options.menuClass}),
                 template(tpl, { width: 5, title: '预览', html: '', className: this.options.previewClass}),
-                template(tpl, { width: 5, title: '配置', html: '', className: this.options.configClass}),
+                '<div class="row">' + template(tpl, { width: 5, title: '配置', html: '', className: this.options.configClass}) + '</div>',
             '</div>'].join('\n');
         this.$el.append(html);
         
@@ -76,12 +76,18 @@
                 },
                 onAdd: function(evt) {
                     var origEl = evt.item, li = $(origEl);
-                    li.click(function(){
+                    li.click(function() {
                         var me = $(this), $jsoneditor = $('.'+ scope.options.configClass);
                         var module_name = me.data('module_name'), module = scope.findModule(module_name);
-                        me.toggleClass('selected');
+                        me.closest('.store_design-preview').find('li').removeClass('selected');
+                        me.addClass('selected');
                         $jsoneditor.data('jsoneditor') && $jsoneditor.jsoneditor('destroy');
                         $jsoneditor.jsoneditor({schema:module.schema});
+                        var editor = $jsoneditor.data('jsoneditor'), val = me.data('module_val');
+                        val && editor.setValue(val);
+                        editor.on('change', function() {
+                            me.data('module_val', editor.getValue());
+                        });
                     });
                 }
             });
@@ -109,7 +115,7 @@
     
     var imageModule = new baseModule({
         name: 'imageModule',
-        tpl: '<li data-module_name="<%=name%>">'+
+        tpl: '<li data-module_name="<%=name%>" class="module_item">'+
                 '<div class="icon"><i class="widget-icon fa fa-image"></i></div>'+
                 '<div class="iframe"></div>'+
                 '<i class="module-remove fa fa-remove"></i>'+

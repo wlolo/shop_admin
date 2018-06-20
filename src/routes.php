@@ -17,4 +17,5 @@ Route::group([
     $router->get('goods/find', 'GoodsController@find');
     $router->resource('goods', 'GoodsController');
     $router->resource('activity', 'ActivityController');
+    $router->resource('activity/module_preview', 'ActivityController@module_preview');
 });

@@ -42,6 +42,9 @@ class ActivityController extends Controller{
             $content->body($this->form());
         });
     }
+    public function module_preview(Request $request) {
+        return response()->json(['hi'=>'wlo_o']);
+    }
     protected function grid() {
         return Admin::grid(Activity::class, function (Grid $grid) {
             $grid->model()->orderBy('activity_id', 'desc');
