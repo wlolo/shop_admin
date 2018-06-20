@@ -36,12 +36,12 @@
         $.each(this.modules, function(i, module) {
             menusHtml += module.view(); 
         });
-        var tpl = '<div class="col-sm-<%=width%> store-design"><ul class="<%=className%>"><%=html%></ul></div>';
+        var tpl = '<div class="col-sm-<%=width%> store-design"><ul class="<%=className%> container-fluid"><%=html%></ul></div>';
         var html = [
             '<div class="form-group store-design-wrap">',
                 template(tpl, { width: 2, title: '模板', html: menusHtml, className: this.options.menuClass}),
                 template(tpl, { width: 5, title: '预览', html: '', className: this.options.previewClass}),
-                '<div class="row">' + template(tpl, { width: 5, title: '配置', html: '', className: this.options.configClass}) + '</div>',
+                template(tpl, { width: 5, title: '配置', html: '', className: this.options.configClass}),
             '</div>'].join('\n');
         this.$el.append(html);
         

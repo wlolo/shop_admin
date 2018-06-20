@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use wlo_o\shop\Activity;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 
 /**
  * 活动页面
@@ -42,8 +43,12 @@ class ActivityController extends Controller{
             $content->body($this->form());
         });
     }
-    public function module_preview(Request $request) {
-        return response()->json(['hi'=>'wlo_o']);
+    public function preview() {
+        $json_str = Request::input('json', '[]');
+        clock()->info($json_str);
+        $json = json_decode($json_str);
+        clock()->info($json);
+        return view('shop::activity/preview', ['json' => $json]);
     }
     protected function grid() {
         return Admin::grid(Activity::class, function (Grid $grid) {

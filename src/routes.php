@@ -16,6 +16,6 @@ Route::group([
 ], function (Router $router) {
     $router->get('goods/find', 'GoodsController@find');
     $router->resource('goods', 'GoodsController');
+    $router->get('activity/preview', 'ActivityController@preview');
     $router->resource('activity', 'ActivityController');
-    $router->resource('activity/module_preview', 'ActivityController@module_preview');
 });
