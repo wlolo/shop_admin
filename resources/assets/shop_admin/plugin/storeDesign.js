@@ -32,7 +32,6 @@
             configClass: 'store_design-config'// 配置
         }, menusHtml = '';
         this.options = $.extend({}, defaults, options || {});
-        
         $.each(this.modules, function(i, module) {
             menusHtml += module.view(); 
         });
@@ -58,11 +57,7 @@
                 group: {name: 'widget',pull: 'clone', put: false},
                 animation: 150,
                 onClone: function(evt){
-//                    var origEl = evt.item;
-//                    var cloneEl = evt.clone;
-//                    $(evt.item).click(function() {
-//                        $('.'+ scope.options.configClass).html('<li>这里是配置</li>');
-//                    });
+                // var origEl = evt.item,cloneEl = evt.clone;$(evt.item).click(function() {$('.'+ scope.options.configClass).html('<li>这里是配置</li>');});
                 }
             });
             var editor = this.$el.find('.' + scope.options.previewClass).sortable({
@@ -72,7 +67,8 @@
                 group: { name: 'widget', pull: false, put: true},
                 onFilter: function (evt) {
                   var li = editor.data('sortable').closest(evt.item);
-                  li && li.parentNode.removeChild(li);
+                  li && $(li).hasClass('selected') && $('.'+ scope.options.configClass).jsoneditor('destroy');
+                  li &&li.parentNode.removeChild(li);
                 },
                 onAdd: function(evt) {
                     var origEl = evt.item, li = $(origEl);
