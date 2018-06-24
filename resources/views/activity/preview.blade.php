@@ -7,8 +7,12 @@
         <title>hello</title>
     </head>
     <body>
+        <script src="/vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+        <script src="/vendor/shop/requirejs/require.js" data-main="/vendor/shop/shop_admin/bll/activity_preview.js"></script>
         <script>
-        var json = [{!!json_encode($json)!!}][0];
+            define('activity_json', function(){
+                return [{!!json_encode($json)!!}][0];
+            });
         </script>
     </body>
 </html>
