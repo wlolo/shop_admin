@@ -29,7 +29,8 @@
         var defaults = {
             menuClass: 'store_design-menu', //菜单
             previewClass: 'store_design-preview',//预览
-            configClass: 'store_design-config'// 配置
+            configClass: 'store_design-config',// 配置
+            priviewUrl: '/admin/activity/preview?json=<%=json%>'
         }, menusHtml = '';
         this.options = $.extend({}, defaults, options || {});
         $.each(this.modules, function(i, module) {
@@ -51,7 +52,7 @@
         modules: [],
         jsoneditor: null,
         show: function() {
-            var scope = this, current_config = null;
+            var scope = this;
             var widget_list = this.$el.find('.' + scope.options.menuClass).sortable({
                 sort: false,
                 group: {name: 'widget',pull: 'clone', put: false},
@@ -66,27 +67,39 @@
                 animation: 150,
                 group: { name: 'widget', pull: false, put: true},
                 onFilter: function (evt) {
-                  var li = editor.data('sortable').closest(evt.item);
-                  li && $(li).hasClass('selected') && $('.'+ scope.options.configClass).jsoneditor('destroy');
-                  li &&li.parentNode.removeChild(li);
+                  var li = editor.data('sortable').closest(evt.item), $el = $(li)
+                  $el.hasClass('selected') && $('.'+ scope.options.configClass).jsoneditor('destroy');
+                  $el.remove();//li.parentNode.removeChild(li);
                 },
                 onAdd: function(evt) {
-                    var origEl = evt.item, li = $(origEl);
+                    var origEl = evt.item, li = $(origEl), w = li.width(), h = li.height();
+                    li.find('.icon').hide();
+                    li.append('<div style="position:absolute;top:10px;width:' + w + 'px;height:' + h + 'px;background-color: transparent;"></div>')
                     li.click(function() {
-                        var me = $(this), $jsoneditor = $('.'+ scope.options.configClass);
-                        var module_name = me.data('module_name'), module = scope.findModule(module_name);
-                        me.closest('.store_design-preview').find('li').removeClass('selected');
+                        var me = $(this), $iframe = me.find('iframe'),
+                            $jsoneditor = $('.'+ scope.options.configClass),
+                            val = me.data('module_val');
+                        me.closest('.store_design-preview').find('li').removeClass('selected');//元素
                         me.addClass('selected');
+                        var module_name = me.data('module_name'),
+                            module = scope.findModule(module_name);//获取组件
                         $jsoneditor.data('jsoneditor') && $jsoneditor.jsoneditor('destroy');
-                        $jsoneditor.jsoneditor({schema:module.schema});
-                        var editor = $jsoneditor.data('jsoneditor'), val = me.data('module_val');
+                        $jsoneditor.jsoneditor({schema: module.schema});
+                        var editor = $jsoneditor.data('jsoneditor');
                         val && editor.setValue(val);
                         editor.on('change', function() {
-                            me.data('module_val', editor.getValue());
+                            var editor_val = editor.getValue();
+                            me.data('module_val', editor_val);
+                            $iframe.attr('src', scope.getPriviewUrl(editor_val));
                         });
                     });
+                    li.append('<iframe src="' + scope.getPriviewUrl({module: li.data('module_name')}) + '" width="385" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>');
                 }
             });
+        },
+        getPriviewUrl: function(json) {
+            json = json || {};
+            return template(this.options.priviewUrl, {json: encodeURIComponent(JSON.stringify(json))});
         },
         findModule: function(name) {
             for(var i = 0; i < this.modules.length; i++) {
@@ -105,7 +118,7 @@
         constructor: baseModule,
         template: template,
         view: function() {
-            return this.template(this.tpl, {name:this.name});
+            return this.template(this.tpl, {name: this.name});
         }
     };
     
@@ -113,7 +126,6 @@
         name: 'imageModule',
         tpl: '<li data-module_name="<%=name%>" class="module_item">'+
                 '<div class="icon"><i class="widget-icon fa fa-image"></i></div>'+
-                '<div class="iframe"></div>'+
                 '<i class="module-remove fa fa-remove"></i>'+
             '</li>',
         schema: {
@@ -175,7 +187,7 @@
                 }
             }
         });
-        return (retVal === void 0) ? this : retVal;
+        return (retVal === void 0) ? this: retVal;
     });
     $.fn.storeDesign = function (options) {
         var retVal, args = arguments;

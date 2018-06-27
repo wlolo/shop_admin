@@ -1,3 +1,6 @@
+.hide {
+    display:none;
+}
 #widget-config {
     padding-top: 5px;
     background-color: #ecf0f5;
@@ -11,7 +14,6 @@
     margin-right: 0px;
     margin-left: 0px;
 }
-
 .store_design-menu .fa-remove{
     display:none;
 }

@@ -7,10 +7,11 @@
         <title>hello</title>
     </head>
     <body>
+        <div id="priview"></div>
         <script src="/vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <script src="/vendor/shop/requirejs/require.js" data-main="/vendor/shop/shop_admin/bll/activity_preview.js"></script>
         <script>
-            define('activity_json', function(){
+            define('act_json', function(){
                 return [{!!json_encode($json)!!}][0];
             });
         </script>
